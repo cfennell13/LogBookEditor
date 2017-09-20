@@ -59,12 +59,13 @@ class Planes_Page(tk.Frame):
         label.pack(pady=10,padx=10)
         
         self.bind("<<ShowFrame>>", self.on_show_frame(controller))
-
+    
+    
+    #loop through all of the plane types and add the buttons to the screen
     def on_show_frame(self, controller):
         print("planes_page")
         #pull all of the planes from the directories
         all_planes = self.get_plane_types()
-        
         
         for index in range(len(all_planes)): 
             
@@ -81,9 +82,9 @@ class Planes_Page(tk.Frame):
 
 
 class N_Page(tk.Frame):
-    from LogBook_Utilities.LB_Util import collect_planes_n, set_plane_n
+    from LogBook_Utilities.LB_Util import collect_planes_n, set_plane_n, roll_back_plane_type
     
-    def execute_things(self, index, n, n_list, controller):
+    def next_page(self, index, n, n_list, controller):
         # This line would be where you insert the letter in the textbox
         
         for i in range(len(n_list)):
@@ -95,7 +96,10 @@ class N_Page(tk.Frame):
         #show next frame
         controller.show_frame(Mech_Tac_Page)
         
-        
+    def previous_page(self, controller):  
+            self.roll_back_plane_type() 
+            controller.show_frame(Planes_Page)
+               
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
         label = tk.Label(self, text="N Page", font=LARGE_FONT)
@@ -106,6 +110,7 @@ class N_Page(tk.Frame):
 
     def on_show_frame(self, controller):
         
+        
         for widget in tk.Frame.winfo_children(self):
             widget.destroy()
             n_list = []
@@ -115,14 +120,12 @@ class N_Page(tk.Frame):
        
         all_planes = self.collect_planes_n()
        
+        #loop through all of the planes and add the buttons to the screen
         for index in range(len(all_planes)): 
-            
-            print("all_planes: n_list:", len(all_planes), len(n_list))
             n=all_planes[index]
-            print("index", index)
-        
+            
             button = tk.Button(self, text=all_planes[index],
-                            command=lambda index=index, n=n: self.execute_things(index, n, n_list, controller)) 
+                            command=lambda index=index, n=n: self.next_page(index, n, n_list, controller)) 
         
             # Add the button to the window
             button.pack()
@@ -131,7 +134,7 @@ class N_Page(tk.Frame):
             n_list.insert(index, button)
         
         prev_button = tk.Button(self, text="Prev",
-                            command=lambda: controller.show_frame(Planes_Page))
+                            command=lambda: self.previous_page(controller))
         prev_button.pack()
         n_list.insert(len(all_planes) +1, prev_button)
 

@@ -10,11 +10,14 @@ import shelve
 def get_plane_types(self):
     os.chdir(os.path.join('C:\\Users\\courtney.fennell\\Documents\\planes'))
     # DEBUG print(os.getcwd())
+    
+    #gets all of the files and directories in the given path and checks if it is a directory
+    #only directories will be included in the types of planes
     return [x for x in os.listdir() 
-            if os.path.isdir(os.path.join('C:\\Users\\courtney.fennell\\Documents\\planes', x))]
+            if os.path.isdir(os.path.join('.\\', x))]
 
 def set_plane_type(self, plane):
-    os.chdir(os.path.join('C:\\Users\\courtney.fennell\\Documents\\planes\\', plane))
+    os.chdir(os.path.join('.\\', plane))
     # DEBUG print(os.getcwd())
 
     
@@ -23,12 +26,18 @@ def set_plane_type(self, plane):
 ###
 
 #plane that is selected is then navigated to 
+def roll_back_plane_type(self):
+    os.chdir("..")
+    
 def set_plane_n(self, n_num):
     os.chdir(os.path.join(n_num))
     
 def collect_planes_n(self):
     # DEBUG print(os.getcwd())
-    return os.listdir()
+    #gets all of the files and directories in the given path and checks if it is a directory
+    #only directories will be included in the types of planes
+    return [x for x in os.listdir() 
+            if os.path.isdir(os.path.join('.\\', x))]
 
 
 ###
@@ -40,6 +49,13 @@ def roll_back_plane(self):
     os.chdir("..")
 
 #gets a list of the A&Ps from the binary file 
+#Dictionary example as follows:
+'''
+mechanics: 
+    Martin Lewis : A&P#
+    Pierce Smith : A&P#
+    etc. 
+'''
 def get_aplist(self):
     print("Retrieving A&P list from shelf file")
     shelfFile = shelve.open(os.path.join('C:\\Users\\courtney.fennell\\Documents\\planes' , 'LogBookEditor_data'))  
