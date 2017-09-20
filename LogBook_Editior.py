@@ -1,11 +1,12 @@
 import tkinter as tk
-from LogBook_Utilities.LB_Util import *
+
 
 LARGE_FONT= ("Verdana", 12)
 plane_list_btn = []
 n_list =[]
 
 class Logbook_Editor(tk.Tk):
+    
     def __init__(self, *args, **kwargs):
         
         tk.Tk.__init__(self, *args, **kwargs)
@@ -36,17 +37,21 @@ class Logbook_Editor(tk.Tk):
 
      
 class Planes_Page(tk.Frame):
-    from LogBook_Utilities.LB_Util import set_plane
-    def execute_things(self, index, n, controller):
-        self.select(index, n)
-        controller.show_frame(N_Page)
-    def select(self, index, plane):
+    from LogBook_Utilities.LB_Util import get_plane_types, set_plane_type
+    
+    def execute_things(self, index, plane, controller):
         # This line would be where you insert the letter in the textbox
+        
+        #disables the one plane type that was selected
         for i in range(len(plane_list_btn)):
             plane_list_btn[i].config(state="normal")
         plane_list_btn[index].config(state="disabled")
         print(plane)
-        self.set_plane(plane)
+        self.set_plane_type(plane)
+        
+        #show next page
+        controller.show_frame(N_Page)
+        
         
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
@@ -58,7 +63,7 @@ class Planes_Page(tk.Frame):
     def on_show_frame(self, controller):
         print("planes_page")
         #pull all of the planes from the directories
-        all_planes = collect_plane_types(self)
+        all_planes = self.get_plane_types()
         
         
         for index in range(len(all_planes)): 
@@ -76,16 +81,20 @@ class Planes_Page(tk.Frame):
 
 
 class N_Page(tk.Frame):
-    from LogBook_Utilities.LB_Util import chdir_plane_n
+    from LogBook_Utilities.LB_Util import collect_planes_n, set_plane_n
+    
     def execute_things(self, index, n, n_list, controller):
-        self.select(index, n, n_list)
-        controller.show_frame(Mech_Tac_Page)
-    def select(self, index, plane,n_list):
         # This line would be where you insert the letter in the textbox
+        
         for i in range(len(n_list)):
             n_list[i].config(state="normal")
         n_list[index].config(state="disabled")
-        print(plane)
+        
+        self.set_plane_n(n)
+        
+        #show next frame
+        controller.show_frame(Mech_Tac_Page)
+        
         
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
@@ -104,7 +113,7 @@ class N_Page(tk.Frame):
         label.pack(pady=10,padx=10)    
         
        
-        all_planes = collect_planes(self)
+        all_planes = self.collect_planes_n()
        
         for index in range(len(all_planes)): 
             
@@ -125,34 +134,44 @@ class N_Page(tk.Frame):
                             command=lambda: controller.show_frame(Planes_Page))
         prev_button.pack()
         n_list.insert(len(all_planes) +1, prev_button)
-        next_button = tk.Button(self, text="Next",
-                            command=lambda: controller.show_frame(Mech_Tac_Page))
-        next_button.pack()
-        n_list.insert(len(all_planes) +2,next_button)
 
 class Mech_Tac_Page(tk.Frame):
-        
+    from LogBook_Utilities.LB_Util import roll_back_plane, get_aplist
+    
+    def previous_page(self, controller):  
+        self.roll_back_plane() 
+        controller.show_frame(N_Page)
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self,parent)
+        tk.Frame.__init__(self,parent) 
+        Mech_list = self.get_aplist()
+        
+        self.bind("<<ShowFrame>>",lambda _: self.on_show_frame(controller, Mech_list))
+
+    def on_show_frame(self, controller, Mech_list):
+        print("mech+tac_page")
+        for widget in tk.Frame.winfo_children(self):
+            widget.destroy()
+            n_list = []
+            
         label = tk.Label(self, text="Mech Page", font=LARGE_FONT)
         label.pack(pady=10,padx=10)
-        
-        self.bind("<<ShowFrame>>",lambda _: self.on_show_frame())
 
-    def on_show_frame(self):
-        print("mech+tac_page")
-        Mech_list = get_aplist(self)
-        print(Mech_list)
+
         optionList = []
         for key in Mech_list: 
             optionList.append(key)
         self.dropVar=tk.StringVar()
-        self.dropVar.set("Yes") # default choice
-        self.dropMenu1 = tk.OptionMenu(self, self.dropVar, *optionList)   
-            
+        self.dropVar.set(optionList[0]) # default choice
+        self.dropMenu1 = tk.OptionMenu(self, self.dropVar, *optionList)  
+        self.dropMenu1.pack() 
+    
+        prev_button = tk.Button(self, text="Prev",
+                            command=lambda: self.previous_page(controller))
+        prev_button.pack()    
         next_button = tk.Button(self, text="Submit",
-                            command=lambda: edit_logbook(self))
+                            command=lambda: submit(self))
         next_button.pack()
+        
         
         
 
