@@ -77,6 +77,9 @@ class Planes_Page(tk.Frame):
 
 class N_Page(tk.Frame):
     from LogBook_Utilities.LB_Util import chdir_plane_n
+    def execute_things(self, index, n, n_list, controller):
+        self.select(index, n, n_list)
+        controller.show_frame(Mech_Tac_Page)
     def select(self, index, plane,n_list):
         # This line would be where you insert the letter in the textbox
         for i in range(len(n_list)):
@@ -110,7 +113,7 @@ class N_Page(tk.Frame):
             print("index", index)
         
             button = tk.Button(self, text=all_planes[index],
-                            command=lambda index=index, n=n: self.select(index, n, n_list))
+                            command=lambda index=index, n=n: self.execute_things(index, n, n_list, controller)) 
         
             # Add the button to the window
             button.pack()
