@@ -1,0 +1,40 @@
+List of functionality in order of priority:
+    priority is based on:
+        1. make sure the spreadsheet looks the same OR BETTER than the original one
+        2. implement the MVP 
+            2.1 having the mechanic automatically update based on selection
+            2.2 have a new spreadsheet saved in the proper location
+        3. Add extra functions so the mechanic never has to open the spreadsheet
+        4. have it work mostly without flaws
+        5. well documented readme
+
+
+add pictures for the airplane, engine, and prop
+
+Change the mechanic to the proper name based on their selection in the drop down
+
+add biweekly functions
+    add a biweekly dropdown 
+    write the biweekly to the file (only needs to be done once, it should propagate by itself
+    save the biweekly in the shelf file to default on the most recently use biweekly 
+    
+display all the warnings on the final page
+    the columns on the far right show the recurring items
+    read in all the items and show them on the GUI
+    
+let the user update the warnings from the gui
+    have the user select/change the warnings that need to be changed
+    write the new values to the new spreadsheet
+    
+   
+handle the exception that is thrown when the user tries to write a file that is already open in excel
+    this will likely never happen except in testing but should be handled anyway
+
+update readme
+
+
+
+
+
+
+
