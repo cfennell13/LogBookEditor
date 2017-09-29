@@ -1,7 +1,9 @@
 import csv
 import openpyxl
+
 import os
 import shelve
+from openpyxl import cell
 
 
 ###
@@ -69,16 +71,36 @@ def copy_logbook(self):
     print("Copying logbook entry file")
 
 #reads the new logbook template to initiate changes      
-def read_logbook(self):
+def read_logbook():
+    import openpyxl
+    from openpyxl import load_workbook
+    from openpyxl import Workbook
+    from openpyxl.drawing.image import Image
+    
     #readin from the copy of the logbook
     print("Preparing for edit of logbook entry file")
-    wb = openpyxl.load_workbook('.xlsx')
-    sheet = wb.get_sheet_by_name('Sheet1')
+    wb = openpyxl.load_workbook('C:\\Users\\courtney.fennell\\Documents\\GitHub\\LogBookEditor\\MASTER_TEMPLATE.xlsx')
+    sheet = wb.active
+    
+    
+    png_loc = r'C:\\Users\\courtney.fennell\\Documents\\GitHub\\LogBookEditor\\PEA_logo.png'
+    #after MUCH trial and error, I still have no idea how size works but
+    #this is what looks like a good size for the PEA logo
+    x=70
+    my_png = Image(png_loc, size=(2*x, x))
+    sheet.add_image(my_png, 'B2')  
+    img = Image(png_loc, size=(x, 2*x))
+    sheet.add_image(img, 'B24')
+    img = Image(png_loc, size=(40, 40))
+    sheet.add_image(img, 'B44')
+    
+    sheet['A10'] = "LOGBOOK ENTRY"
+    wb.save("newFILE_template.xlsx")
 
 #may be combined with read_logbook    
 def edit_logbook(self):
     print("editing logbook")
     
 def submit(self): #executed when form is submitted.
-    print("hi")
+    read_logbook()
     

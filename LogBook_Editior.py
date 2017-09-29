@@ -1,17 +1,22 @@
 import tkinter as tk
+from tkinter.constants import TOP
 
 
 LARGE_FONT= ("Verdana", 12)
+
 plane_list_btn = []
 n_list =[]
-
+global mi 
+      
 class Logbook_Editor(tk.Tk):
     
     def __init__(self, *args, **kwargs):
         
         tk.Tk.__init__(self, *args, **kwargs)
         container = tk.Frame(self)
-
+        mi= tk.PhotoImage(file="C:\\Users\\courtney.fennell\\Documents\\GitHub\\LogBookEditor\\1.png")
+        
+  
         container.pack(side="top", fill="both", expand = True)
 
         container.grid_rowconfigure(0, weight=1)
@@ -57,12 +62,14 @@ class Planes_Page(tk.Frame):
         tk.Frame.__init__(self,parent)
         label = tk.Label(self, text="Start Page", font=LARGE_FONT)
         label.pack(pady=10,padx=10)
-        
         self.bind("<<ShowFrame>>", self.on_show_frame(controller))
     
     
     #loop through all of the plane types and add the buttons to the screen
     def on_show_frame(self, controller):
+        mi= tk.PhotoImage(file="C:\\Users\\courtney.fennell\\Documents\\GitHub\\LogBookEditor\\1.png")
+        
+  
         print("planes_page")
         #pull all of the planes from the directories
         all_planes = self.get_plane_types()
@@ -75,6 +82,8 @@ class Planes_Page(tk.Frame):
                             command=lambda index=index, n=n: self.execute_things(index, n, controller) )
         
             # Add the button to the window
+            btn.config(image=mi, compound=TOP)
+            btn.image = mi
             btn.pack()
         
             # Add a reference to the button to 'buttons'
@@ -138,12 +147,14 @@ class N_Page(tk.Frame):
         prev_button.pack()
         n_list.insert(len(all_planes) +1, prev_button)
 
+
 class Mech_Tac_Page(tk.Frame):
-    from LogBook_Utilities.LB_Util import roll_back_plane, get_aplist
-    
+    from LogBook_Utilities.LB_Util import roll_back_plane, get_aplist, submit
+        
     def previous_page(self, controller):  
         self.roll_back_plane() 
         controller.show_frame(N_Page)
+        
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent) 
         Mech_list = self.get_aplist()
@@ -172,11 +183,9 @@ class Mech_Tac_Page(tk.Frame):
                             command=lambda: self.previous_page(controller))
         prev_button.pack()    
         next_button = tk.Button(self, text="Submit",
-                            command=lambda: submit(self))
+                            command=lambda: self.submit())
         next_button.pack()
         
-        
-        
-
+    
 app = Logbook_Editor()
 app.mainloop()
