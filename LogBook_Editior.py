@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter.constants import TOP
+from idlelib.searchengine import get_selection
 
 
 LARGE_FONT= ("Verdana", 12)
@@ -67,7 +68,7 @@ class Planes_Page(tk.Frame):
     
     #loop through all of the plane types and add the buttons to the screen
     def on_show_frame(self, controller):
-        mi= tk.PhotoImage(file="C:\\Users\\courtney.fennell\\Documents\\GitHub\\LogBookEditor\\1.png")
+        #mi= tk.PhotoImage(file="C:\\Users\\courtney.fennell\\Documents\\GitHub\\LogBookEditor\\1.png")
         
   
         print("planes_page")
@@ -82,8 +83,8 @@ class Planes_Page(tk.Frame):
                             command=lambda index=index, n=n: self.execute_things(index, n, controller) )
         
             # Add the button to the window
-            btn.config(image=mi, compound=TOP)
-            btn.image = mi
+            #btn.config(image=mi, compound=TOP)
+            #btn.image = mi
             btn.pack()
         
             # Add a reference to the button to 'buttons'
@@ -142,14 +143,18 @@ class N_Page(tk.Frame):
             # Add a reference to the button to 'buttons'
             n_list.insert(index, button)
         
-        prev_button = tk.Button(self, text="Prev",
+        prev_btn = tk.Button(self, text="Prev",
                             command=lambda: self.previous_page(controller))
-        prev_button.pack()
-        n_list.insert(len(all_planes) +1, prev_button)
+        prev_btn.pack()
+        n_list.insert(len(all_planes) +1, prev_btn)
 
 
 class Mech_Tac_Page(tk.Frame):
     from LogBook_Utilities.LB_Util import roll_back_plane, get_aplist, submit
+    
+    def submit_quit(self, selected_mech):
+        self.submit(selected_mech)
+        app.quit()
         
     def previous_page(self, controller):  
         self.roll_back_plane() 
@@ -179,12 +184,12 @@ class Mech_Tac_Page(tk.Frame):
         self.dropMenu1 = tk.OptionMenu(self, self.dropVar, *optionList)  
         self.dropMenu1.pack() 
     
-        prev_button = tk.Button(self, text="Prev",
+        prev_btn = tk.Button(self, text="Prev",
                             command=lambda: self.previous_page(controller))
-        prev_button.pack()    
-        next_button = tk.Button(self, text="Submit",
-                            command=lambda: self.submit())
-        next_button.pack()
+        prev_btn.pack()    
+        submit_btn = tk.Button(self, text="Submit",
+                            command=lambda: self.submit_quit(self.dropVar.get()))
+        submit_btn.pack()
         
     
 app = Logbook_Editor()

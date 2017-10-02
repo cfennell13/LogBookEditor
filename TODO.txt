@@ -13,6 +13,12 @@ add pictures for the airplane, engine, and prop
 
 Change the mechanic to the proper name based on their selection in the drop down
 
+Add tach time label for inputting tach times
+
+insert today's date into the logfile
+
+Set the dropdown default to the last used mechanic
+
 add biweekly functions
     add a biweekly dropdown 
     write the biweekly to the file (only needs to be done once, it should propagate by itself
