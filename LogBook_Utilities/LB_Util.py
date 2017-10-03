@@ -83,7 +83,7 @@ def submit(self, selected_mech, tach_time):
     
     
     '''
-    Add the pictures to the excel doc
+    Add the company logos to the excel doc
     #after MUCH trial and error, I still have no idea how size works but
     #this is what looks like a good size for the PEA logo
     '''
@@ -103,6 +103,31 @@ def submit(self, selected_mech, tach_time):
     img = Image(company_logo, size=(2*x, x))
     sheet.add_image(img, 'B48')
     
+    
+    '''
+    Add the planes logos to the excel doc
+    #after MUCH trial and error, I still have no idea how size works but
+    #this is what looks like a good size for the PEA logo
+    '''
+    #this directory is the parent directory of the whole plane directories
+    #this directory SHOULD contain the logo of the maintenance company
+    #get the parent's parent directory
+    logos_path = os.path.abspath('..')
+    #get the logo.png
+    airframe_logo = os.path.join(logos_path, 'airframe_logo.png')
+    engine_logo = os.path.join(logos_path, 'engine_logo.png')
+    prop_logo = os.path.join(logos_path, 'propeller_logo.png')
+    
+    
+    x=70
+    airframe_ = Image(airframe_logo, size=(2*x, x))
+    sheet.add_image(airframe_, 'H17')  
+    
+    engine = Image(engine_logo, size=(2*x, x))
+    sheet.add_image(engine, 'H41')
+    
+    prop = Image(prop_logo, size=(2*x, x))
+    sheet.add_image(prop, 'H58')
     '''
     Set the mechanic on the excel doc
     '''
