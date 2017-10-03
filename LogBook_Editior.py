@@ -180,7 +180,7 @@ class N_Page(tk.Frame):
 
 
 class Mech_Tac_Page(tk.Frame):
-    from LogBook_Utilities.LB_Util import roll_back_plane, get_aplist, submit, get_biweekly
+    from LogBook_Utilities.LB_Util import roll_back_plane, get_aplist, submit, get_biweekly, get_mechanic
     
     def submit_quit(self, selections):
         if(selections['tach_time']):
@@ -237,7 +237,12 @@ class Mech_Tac_Page(tk.Frame):
         for key in Mech_list: 
             mech_list_dropdown.append(key)
         self.mech_dropdown=tk.StringVar()
-        self.mech_dropdown.set(mech_list_dropdown[0]) # default choice
+        try:
+            mechanic = self.get_mechanic()
+        except:
+            mechanic = mech_list_dropdown[0]
+            
+        self.mech_dropdown.set(mechanic) # default choice
         self.dropMenu1 = tk.OptionMenu(self, self.mech_dropdown, *mech_list_dropdown)  
         self.dropMenu1.grid(column = 1, 
                             columnspan=2,
@@ -280,7 +285,7 @@ class Mech_Tac_Page(tk.Frame):
                          ipady = 5,
                          sticky=tk.E)
         biweekly_list = []
-        for each in range(1, 26): 
+        for each in range(1, 27): #there are a possible 26 biweeklies
             biweekly_list.append(each)
         self.biweekly_dropdown=tk.StringVar()
         self.biweekly_dropdown.set(self.get_biweekly()) # default choice

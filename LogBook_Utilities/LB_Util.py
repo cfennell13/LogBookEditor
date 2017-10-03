@@ -81,6 +81,17 @@ def get_biweekly(self):
     shelfFile.close()
     return biweekly
 
+def write_mechanic(mechanic):
+    shelfFile = shelve.open(os.path.join('C:\\Users\\courtney.fennell\\Documents\\planes' , 'LogBookEditor_data'))  
+    shelfFile['selected_mechanic'] = mechanic
+    shelfFile.close()
+
+def get_mechanic(self):
+    shelfFile = shelve.open(os.path.join('C:\\Users\\courtney.fennell\\Documents\\planes' , 'LogBookEditor_data')) 
+    mechanic = shelfFile['selected_mechanic']
+    shelfFile.close()
+    return mechanic
+
 def submit(self, selections):
     '''
     reads the new logbook template to initiate changes  
@@ -169,7 +180,6 @@ def submit(self, selections):
     Set the mechanic on the excel doc
     '''
     AP_list = self.get_aplist()
-    sheet["A21"]
     
     sheet['B21'] = "Signature: " + selected_mech + '_________________________' 
     sheet['E21'] = "    Certificate #A&P" + AP_list[selected_mech] 
@@ -181,6 +191,10 @@ def submit(self, selections):
     sheet['B32'] = "Engine LOGBOOK ENTRY"
     sheet['B55'] = "Propeller LOGBOOK ENTRY"
     wb.save(date + '_' + os.path.basename(os.path.abspath('.')) + '.xlsx')
+    
+    #write the mechanic to the shelve file
+    write_mechanic(selected_mech)
+    
     
     
     '''
