@@ -20,7 +20,7 @@ RESERACH TASK
             Bold and blue: prop #, engine #, airframe #
             bold and red: any serial numbers (start with S/N)
 
-Change the mechanic to the proper name based on their selection in the drop down
+''' DONE''' Change the mechanic to the proper name based on their selection in the drop down
 
 ''' DONE''' Add tach time label for inputting tach times
 

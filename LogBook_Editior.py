@@ -15,9 +15,7 @@ class Logbook_Editor(tk.Tk):
         
         tk.Tk.__init__(self, *args, **kwargs)
         container = tk.Frame(self)
-        mi= tk.PhotoImage(file="C:\\Users\\courtney.fennell\\Documents\\GitHub\\LogBookEditor\\1.png")
         
-  
         container.pack(side="top", fill="both", expand = True)
 
         container.grid_rowconfigure(0, weight=1)
@@ -67,8 +65,6 @@ class Planes_Page(tk.Frame):
     
     #loop through all of the plane types and add the buttons to the screen
     def on_show_frame(self, controller):
-        #mi= tk.PhotoImage(file="C:\\Users\\courtney.fennell\\Documents\\GitHub\\LogBookEditor\\1.png")
-        
   
         print("planes_page")
         #pull all of the planes from the directories
@@ -82,8 +78,7 @@ class Planes_Page(tk.Frame):
                             command=lambda index=index, n=n: self.execute_things(index, n, controller) )
         
             # Add the button to the window
-            #btn.config(image=mi, compound=TOP)
-            #btn.image = mi
+
             btn.grid(column = index+1, 
                      row = 1, 
                      padx = 5, 
