@@ -187,8 +187,8 @@ class N_Page(tk.Frame):
 class Mech_Tac_Page(tk.Frame):
     from LogBook_Utilities.LB_Util import roll_back_plane, get_aplist, submit
     
-    def submit_quit(self, selected_mech):
-        self.submit(selected_mech)
+    def submit_quit(self, selected_mech, tach_time):
+        self.submit(selected_mech, tach_time)
         app.quit()
         
     def previous_page(self, controller):  
@@ -217,7 +217,16 @@ class Mech_Tac_Page(tk.Frame):
                      ipady = 5,
                      sticky=tk.E+tk.W+tk.S+tk.N)
         '''
-        
+            
+        #drop down list
+        self.TacLbl = tk.Label(self, text="Select a mechanic: ")
+        self.TacLbl.grid(column = 0, 
+                         row = 0, 
+                         padx = 5, 
+                         pady=5, 
+                         ipadx = 5,
+                         ipady = 5,
+                         sticky=tk.E)
         optionList = []
         for key in Mech_list: 
             optionList.append(key)
@@ -233,6 +242,8 @@ class Mech_Tac_Page(tk.Frame):
                             ipady = 5,
                             sticky=tk.E+tk.W+tk.S+tk.N)
         
+        
+        #input for tach time
         self.TacLbl = tk.Label(self, text="Tach time: ")
         self.TacLbl.grid(column = 0, 
                          row = 1, 
@@ -240,7 +251,8 @@ class Mech_Tac_Page(tk.Frame):
                          pady=5, 
                          ipadx = 5,
                          ipady = 5,
-                         sticky=tk.E+tk.W+tk.S+tk.N)
+                         sticky=tk.E)
+        
         self.input = tk.Entry(self, bd=5)
         self.input.grid(column = 1, 
                         columnspan=2,
@@ -265,7 +277,7 @@ class Mech_Tac_Page(tk.Frame):
         
         #submit button
         submit_btn = tk.Button(self, text="Submit",
-                            command=lambda: self.submit_quit(self.dropVar.get()))
+                            command=lambda: self.submit_quit(self.dropVar.get(), self.input.get()))
         
         submit_btn.grid(column = 2, 
                         row = 2, 

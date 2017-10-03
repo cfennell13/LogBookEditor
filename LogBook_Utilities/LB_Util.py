@@ -65,7 +65,7 @@ def get_aplist(self):
     shelfFile.close()
     return AP_list
     
-def create_new_logbook(self, selected_mech):
+def create_new_logbook(self, selected_mech, tach_time):
     '''
     reads the new logbook template to initiate changes  
     '''
@@ -104,6 +104,11 @@ def create_new_logbook(self, selected_mech):
     
     
     "Certificate #A&P" + selected_mech
+    
+    #set the tach time on the logbook
+    sheet['I2'] = round(int(tach_time),1) # want 1 decimal point
+    
+    #create entries
     sheet['B10'] = "Airframe LOGBOOK ENTRY"
     sheet['B32'] = "Engine LOGBOOK ENTRY"
     sheet['B55'] = "Propeller LOGBOOK ENTRY"
@@ -116,10 +121,10 @@ def create_new_logbook(self, selected_mech):
     #or specify a full path to the file
     #os.system.subprocess.call(['cscript.exe', 'C:\\Users\\user\\FixFormatting.vbs', sheet])
     
-def submit(self, selected_mech): 
+def submit(self, selected_mech, tach_time): 
     '''
     executed when form is submitted.
     '''
-    create_new_logbook(self, selected_mech)
+    create_new_logbook(self, selected_mech, tach_time)
     return 0;
 

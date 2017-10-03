@@ -11,9 +11,18 @@ List of functionality in order of priority:
 
 add pictures for the airplane, engine, and prop
 
+RESERACH TASK
+    formatting with openpyxl??
+    will probably need to do some VBA??
+    Formatting required:
+        formatting for some of the keywords in the excel sheet:
+            bold: 100 Hr, Airframe, Engine, Propeller,
+            Bold and blue: prop #, engine #, airframe #
+            bold and red: any serial numbers (start with S/N)
+
 Change the mechanic to the proper name based on their selection in the drop down
 
-Add tach time label for inputting tach times
+''' DONE''' Add tach time label for inputting tach times
 
 insert today's date into the logfile
 
@@ -42,9 +51,6 @@ let the user specify the path to the planes on start for the first time
     need to read it everytime from the shelve file
     
 update readme
-
-
-
 
 
 
