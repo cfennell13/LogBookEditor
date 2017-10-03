@@ -1,5 +1,6 @@
 import os
 import shelve
+from nt import getcwd
 
 
 ###
@@ -86,14 +87,20 @@ def create_new_logbook(self, selected_mech, tach_time):
     #after MUCH trial and error, I still have no idea how size works but
     #this is what looks like a good size for the PEA logo
     '''
-    png_loc = r'C:\\Users\\courtney.fennell\\Documents\\GitHub\\LogBookEditor\\PEA_logo.png'
+    print(os.getcwd()) #C:\Users\courtney.fennell\Documents\planes\Cessna 172\N123FF
+    #this directory is the parent directory of the whole plane directories
+    #this directory SHOULD contain the logo of the maintenance company
+    #get the parent's parent directory
+    company_logo = os.path.dirname(os.path.abspath('..')) 
+    #get the logo.png
+    company_logo = os.path.join(company_logo, 'logo.png')
     
     x=70
-    my_png = Image(png_loc, size=(2*x, x))
+    my_png = Image(company_logo, size=(2*x, x))
     sheet.add_image(my_png, 'B2')  
-    img = Image(png_loc, size=(2*x, x))
+    img = Image(company_logo, size=(2*x, x))
     sheet.add_image(img, 'B25')
-    img = Image(png_loc, size=(2*x, x))
+    img = Image(company_logo, size=(2*x, x))
     sheet.add_image(img, 'B48')
     
     '''

@@ -188,8 +188,20 @@ class Mech_Tac_Page(tk.Frame):
     from LogBook_Utilities.LB_Util import roll_back_plane, get_aplist, submit
     
     def submit_quit(self, selected_mech, tach_time):
-        self.submit(selected_mech, tach_time)
-        app.quit()
+        print(tach_time)
+        if(tach_time):
+            self.submit(selected_mech, tach_time)
+            app.quit()
+        else:
+            self.TacLbl = tk.Label(self, text="Enter a tach time!! ")
+            self.TacLbl.grid(column = 3, 
+                             row = 1, 
+                             padx = 5, 
+                             pady=5, 
+                             ipadx = 5,
+                             ipady = 5,
+                             sticky=tk.E)
+            
         
     def previous_page(self, controller):  
         self.roll_back_plane() 
@@ -253,8 +265,8 @@ class Mech_Tac_Page(tk.Frame):
                          ipady = 5,
                          sticky=tk.E)
         
-        self.input = tk.Entry(self, bd=5)
-        self.input.grid(column = 1, 
+        self.tachInput = tk.Entry(self, bd=5)
+        self.tachInput.grid(column = 1, 
                         columnspan=2,
                         row = 1, 
                         padx = 5, 
@@ -277,7 +289,7 @@ class Mech_Tac_Page(tk.Frame):
         
         #submit button
         submit_btn = tk.Button(self, text="Submit",
-                            command=lambda: self.submit_quit(self.dropVar.get(), self.input.get()))
+                            command=lambda: self.submit_quit(self.dropVar.get(), self.tachInput.get()))
         
         submit_btn.grid(column = 2, 
                         row = 2, 
