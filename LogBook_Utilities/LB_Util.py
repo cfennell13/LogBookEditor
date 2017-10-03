@@ -66,7 +66,7 @@ def get_aplist(self):
     shelfFile.close()
     return AP_list
     
-def submit(self, selected_mech, tach_time): 
+def submit(self, selections): 
     '''
     reads the new logbook template to initiate changes  
     '''
@@ -74,6 +74,13 @@ def submit(self, selected_mech, tach_time):
     from openpyxl import load_workbook
     from openpyxl.drawing.image import Image
     import datetime
+    
+    '''
+    grab all the variables from the dictionary
+    '''
+    selected_mech = selections['mechanic']
+    tach_time = selections['tach_time']
+    biweekly  = selections['biweekly']
     
 
     '''
@@ -131,7 +138,9 @@ def submit(self, selected_mech, tach_time):
     '''
     Set the date on the excel doc
     '''
-    sheet['G2'] = (str(datetime.datetime.today()).split(" ")[0])
+    #date is used for naming the file also
+    date = str(datetime.datetime.today()).split(" ")[0]
+    sheet['G2'] = (date)
     '''
     Set the mechanic on the excel doc
     '''
@@ -147,7 +156,7 @@ def submit(self, selected_mech, tach_time):
     sheet['B10'] = "Airframe LOGBOOK ENTRY"
     sheet['B32'] = "Engine LOGBOOK ENTRY"
     sheet['B55'] = "Propeller LOGBOOK ENTRY"
-    wb.save("newFILE_template.xlsx")
+    wb.save(date + '_' + os.path.basename(os.path.abspath('.')) + '.xlsx')
     
     '''
     Fix the formatting on the excel sheet so it matches the original file

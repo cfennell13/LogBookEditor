@@ -182,10 +182,9 @@ class N_Page(tk.Frame):
 class Mech_Tac_Page(tk.Frame):
     from LogBook_Utilities.LB_Util import roll_back_plane, get_aplist, submit
     
-    def submit_quit(self, selected_mech, tach_time):
-        print(tach_time)
-        if(tach_time):
-            self.submit(selected_mech, tach_time)
+    def submit_quit(self, selections):
+        if(selections['tach_time']):
+            self.submit(selections)
             app.quit()
         else:
             self.TacLbl = tk.Label(self, text="Enter a tach time!! ")
@@ -213,7 +212,7 @@ class Mech_Tac_Page(tk.Frame):
             widget.destroy()
             n_list = []
             
-        
+        set_row = 0
         '''
         label = tk.Label(self, text="Mech Page", font=LARGE_FONT)
         label.grid(column = 1, 
@@ -225,35 +224,35 @@ class Mech_Tac_Page(tk.Frame):
                      sticky=tk.E+tk.W+tk.S+tk.N)
         '''
             
-        #drop down list
+        #drop down  Mech_list list
         self.TacLbl = tk.Label(self, text="Select a mechanic: ")
         self.TacLbl.grid(column = 0, 
-                         row = 0, 
+                         row = set_row, 
                          padx = 5, 
                          pady=5, 
                          ipadx = 5,
                          ipady = 5,
                          sticky=tk.E)
-        optionList = []
+        mech_list_dropdown = []
         for key in Mech_list: 
-            optionList.append(key)
-        self.dropVar=tk.StringVar()
-        self.dropVar.set(optionList[0]) # default choice
-        self.dropMenu1 = tk.OptionMenu(self, self.dropVar, *optionList)  
+            mech_list_dropdown.append(key)
+        self.mech_dropdown=tk.StringVar()
+        self.mech_dropdown.set(mech_list_dropdown[0]) # default choice
+        self.dropMenu1 = tk.OptionMenu(self, self.mech_dropdown, *mech_list_dropdown)  
         self.dropMenu1.grid(column = 1, 
                             columnspan=2,
-                            row = 0, 
+                            row = set_row, 
                             padx = 5, 
                             pady = 5, 
                             ipadx = 5,
                             ipady = 5,
                             sticky=tk.E+tk.W+tk.S+tk.N)
         
-        
+        set_row+=1
         #input for tach time
         self.TacLbl = tk.Label(self, text="Tach time: ")
         self.TacLbl.grid(column = 0, 
-                         row = 1, 
+                         row = set_row, 
                          padx = 5, 
                          pady=5, 
                          ipadx = 5,
@@ -263,19 +262,44 @@ class Mech_Tac_Page(tk.Frame):
         self.tachInput = tk.Entry(self, bd=5)
         self.tachInput.grid(column = 1, 
                         columnspan=2,
-                        row = 1, 
+                        row = set_row, 
                         padx = 5, 
                         pady=5, 
                         ipadx = 5,
                         ipady = 5,
                         sticky=tk.E+tk.W+tk.S+tk.N)
         
+        set_row+=1
+        #drop down biweekly_list list
+        self.TacLbl = tk.Label(self, text="Select a biweekly: ")
+        self.TacLbl.grid(column = 0, 
+                         row = set_row, 
+                         padx = 5, 
+                         pady=5, 
+                         ipadx = 5,
+                         ipady = 5,
+                         sticky=tk.E)
+        biweekly_list = []
+        for each in range(1, 26): 
+            biweekly_list.append(each)
+        self.biweekly_dropdown=tk.StringVar()
+        self.biweekly_dropdown.set(biweekly_list[0]) # default choice
+        self.dropMenu2 = tk.OptionMenu(self, self.biweekly_dropdown, *biweekly_list)  
+        self.dropMenu2.grid(column = 1, 
+                            columnspan=2,
+                            row = set_row, 
+                            padx = 5, 
+                            pady = 5, 
+                            ipadx = 5,
+                            ipady = 5,
+                            sticky=tk.E+tk.W+tk.S+tk.N)
         
+        set_row+=1
         #previous button
         prev_btn = tk.Button(self, text="Prev",
                             command=lambda: self.previous_page(controller))
         prev_btn.grid(  column = 0,  
-                        row = 2, 
+                        row = set_row, 
                         padx = 5, 
                         pady=5, 
                         ipadx = 5,
@@ -284,10 +308,17 @@ class Mech_Tac_Page(tk.Frame):
         
         #submit button
         submit_btn = tk.Button(self, text="Submit",
-                            command=lambda: self.submit_quit(self.dropVar.get(), self.tachInput.get()))
+                            command=lambda: self.submit_quit(
+                                selections = {
+                                    'mechanic' : self.mech_dropdown.get(), 
+                                    'tach_time' : self.tachInput.get(), 
+                                    'biweekly' :self.biweekly_dropdown.get()
+                                    }
+                            )
+                    )
         
         submit_btn.grid(column = 2, 
-                        row = 2, 
+                        row = set_row, 
                         padx = 5, 
                         pady=5, 
                         ipadx = 5,
