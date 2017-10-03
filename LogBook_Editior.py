@@ -61,8 +61,7 @@ class Planes_Page(tk.Frame):
         
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
-        label = tk.Label(self, text="Start Page", font=LARGE_FONT)
-        label.pack(pady=10,padx=10)
+    
         self.bind("<<ShowFrame>>", self.on_show_frame(controller))
     
     
@@ -85,10 +84,29 @@ class Planes_Page(tk.Frame):
             # Add the button to the window
             #btn.config(image=mi, compound=TOP)
             #btn.image = mi
-            btn.pack()
+            btn.grid(column = index+1, 
+                     row = 1, 
+                     padx = 5, 
+                     pady=5, 
+                     ipadx = 5,
+                     ipady = 5,
+                     sticky=tk.E+tk.W+tk.S+tk.N)
         
             # Add a reference to the button to 'buttons'
             plane_list_btn.append(btn)
+            
+        
+        label = tk.Label(self, text="Select a plane", font=LARGE_FONT)
+        
+        #this centers the label no matter how many plane options there are
+        x = round(len(plane_list_btn)/2)
+        if(x <=-1):
+            x=1
+            
+        if(len(plane_list_btn)%2 == 0): #if x is even  
+            label.grid(row = 0,  column=x,  columnspan=2, pady=10,padx=10)
+        else:
+            label.grid(row = 0,  column=x,  columnspan=3, pady=10,padx=10)
 
 
 class N_Page(tk.Frame):
@@ -113,7 +131,7 @@ class N_Page(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self,parent)
         label = tk.Label(self, text="N Page", font=LARGE_FONT)
-        label.pack(pady=10,padx=10)
+        label.grid(row = 0,  column=2, columnspan=2, sticky=tk.E, pady=10,padx=10)
 
         
         self.bind("<<ShowFrame>>", lambda _: self.on_show_frame(controller))
@@ -124,8 +142,8 @@ class N_Page(tk.Frame):
         for widget in tk.Frame.winfo_children(self):
             widget.destroy()
             n_list = []
-        label = tk.Label(self, text="N Page", font=LARGE_FONT)
-        label.pack(pady=10,padx=10)    
+        
+
         
        
         all_planes = self.collect_planes_n()
@@ -138,15 +156,32 @@ class N_Page(tk.Frame):
                             command=lambda index=index, n=n: self.next_page(index, n, n_list, controller)) 
         
             # Add the button to the window
-            button.pack()
+            button.grid(column = index+1, 
+                     row = 1, 
+                     padx = 5, 
+                     pady=5, 
+                     ipadx = 5,
+                     ipady = 5,
+                     sticky=tk.E+tk.W+tk.S+tk.N)
         
             # Add a reference to the button to 'buttons'
             n_list.insert(index, button)
         
         prev_btn = tk.Button(self, text="Prev",
                             command=lambda: self.previous_page(controller))
-        prev_btn.pack()
+        prev_btn.grid(row = 2,  column=0, 
+                      padx = 5, pady=5, 
+                      ipadx = 5, ipady = 5,
+                      sticky=tk.W)
         n_list.insert(len(all_planes) +1, prev_btn)
+        
+        label = tk.Label(self, text="N Page", font=LARGE_FONT)
+        x = round(len(n_list)/2)-1
+        print(x)
+        if(x <=-1):
+            x=1
+            
+        label.grid(row = 0,  column=x, columnspan=2, pady=10,padx=10)
 
 
 class Mech_Tac_Page(tk.Frame):
@@ -167,35 +202,78 @@ class Mech_Tac_Page(tk.Frame):
         self.bind("<<ShowFrame>>",lambda _: self.on_show_frame(controller, Mech_list))
 
     def on_show_frame(self, controller, Mech_list):
-        print("mech+tac_page")
         for widget in tk.Frame.winfo_children(self):
             widget.destroy()
             n_list = []
             
+        
+        '''
         label = tk.Label(self, text="Mech Page", font=LARGE_FONT)
-        label.pack(pady=10,padx=10)
-
-
+        label.grid(column = 1, 
+                     row = 1, 
+                     padx = 5, 
+                     pady=5, 
+                     ipadx = 5,
+                     ipady = 5,
+                     sticky=tk.E+tk.W+tk.S+tk.N)
+        '''
+        
         optionList = []
         for key in Mech_list: 
             optionList.append(key)
         self.dropVar=tk.StringVar()
         self.dropVar.set(optionList[0]) # default choice
         self.dropMenu1 = tk.OptionMenu(self, self.dropVar, *optionList)  
-        self.dropMenu1.pack() 
+        self.dropMenu1.grid(column = 1, 
+                            columnspan=2,
+                            row = 0, 
+                            padx = 5, 
+                            pady = 5, 
+                            ipadx = 5,
+                            ipady = 5,
+                            sticky=tk.E+tk.W+tk.S+tk.N)
         
         self.TacLbl = tk.Label(self, text="Tach time: ")
-        self.TacLbl.pack(side=tk.LEFT)
+        self.TacLbl.grid(column = 0, 
+                         row = 1, 
+                         padx = 5, 
+                         pady=5, 
+                         ipadx = 5,
+                         ipady = 5,
+                         sticky=tk.E+tk.W+tk.S+tk.N)
         self.input = tk.Entry(self, bd=5)
-        self.input.pack(side=tk.RIGHT)
+        self.input.grid(column = 1, 
+                        columnspan=2,
+                        row = 1, 
+                        padx = 5, 
+                        pady=5, 
+                        ipadx = 5,
+                        ipady = 5,
+                        sticky=tk.E+tk.W+tk.S+tk.N)
         
-    
+        
+        #previous button
         prev_btn = tk.Button(self, text="Prev",
                             command=lambda: self.previous_page(controller))
-        prev_btn.pack()    
+        prev_btn.grid(  column = 0,  
+                        row = 2, 
+                        padx = 5, 
+                        pady=5, 
+                        ipadx = 5,
+                        ipady = 5,
+                        sticky=tk.E+tk.W+tk.S+tk.N)   
+        
+        #submit button
         submit_btn = tk.Button(self, text="Submit",
                             command=lambda: self.submit_quit(self.dropVar.get()))
-        submit_btn.pack()
+        
+        submit_btn.grid(column = 2, 
+                        row = 2, 
+                        padx = 5, 
+                        pady=5, 
+                        ipadx = 5,
+                        ipady = 5,
+                        sticky=tk.E+tk.W+tk.S+tk.N)
         
     
 app = Logbook_Editor()
