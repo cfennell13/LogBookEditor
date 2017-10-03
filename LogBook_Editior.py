@@ -183,6 +183,12 @@ class Mech_Tac_Page(tk.Frame):
         self.dropVar.set(optionList[0]) # default choice
         self.dropMenu1 = tk.OptionMenu(self, self.dropVar, *optionList)  
         self.dropMenu1.pack() 
+        
+        self.TacLbl = tk.Label(self, text="Tach time: ")
+        self.TacLbl.pack(side=tk.LEFT)
+        self.input = tk.Entry(self, bd=5)
+        self.input.pack(side=tk.RIGHT)
+        
     
         prev_btn = tk.Button(self, text="Prev",
                             command=lambda: self.previous_page(controller))

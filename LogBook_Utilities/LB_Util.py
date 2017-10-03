@@ -12,10 +12,10 @@ def get_plane_types(self):
     #gets all of the files and directories in the given path and checks if it is a directory
     #only directories will be included in the types of planes
     return [x for x in os.listdir() 
-            if os.path.isdir(os.path.join('.\\', x))]
+            if os.path.isdir(os.path.join('.', x))]
 
 def set_plane_type(self, plane):
-    os.chdir(os.path.join('.\\', plane))
+    os.chdir(os.path.join('.', plane))
     # DEBUG print(os.getcwd())
 
     
@@ -32,10 +32,12 @@ def set_plane_n(self, n_num):
     
 def collect_planes_n(self):
     # DEBUG print(os.getcwd())
-    #gets all of the files and directories in the given path and checks if it is a directory
-    #only directories will be included in the types of planes
+    '''
+    gets all of the files and directories in the given path and checks if it is a directory
+    only directories will be included in the types of planes
+    '''
     return [x for x in os.listdir() 
-            if os.path.isdir(os.path.join('.\\', x))]
+            if os.path.isdir(os.path.join('.', x))]
 
 
 ###
@@ -46,38 +48,36 @@ def collect_planes_n(self):
 def roll_back_plane(self):
     os.chdir("..")
 
-#gets a list of the A&Ps from the binary file 
-#Dictionary example as follows:
-'''
-mechanics: 
-    Martin Lewis : A&P#
-    Pierce Smith : A&P#
-    etc. 
-'''
+
 def get_aplist(self):
+    #gets a list of the A&Ps from the binary file 
+    #Dictionary example as follows:
+    '''
+        mechanics: 
+        Martin Lewis : A&P#
+        Pierce Smith : A&P#
+        etc. 
+    '''
+    
     print("Retrieving A&P list from shelf file")
     shelfFile = shelve.open(os.path.join('C:\\Users\\courtney.fennell\\Documents\\planes' , 'LogBookEditor_data'))  
     AP_list = shelfFile['mechanics']
     shelfFile.close()
     return AP_list
-
-#creates a copy of the logbook for editing    
-def copysubmit_logbook(self):
-    #make a copy of the logbook template to work off of
-    print("Copying logbook entry file")
-
-#reads the new logbook template to initiate changes      
-def read_logbook(self, selected_mech):
-    import openpyxl
-    from openpyxl import load_workbook
-    from openpyxl import Workbook
-    from openpyxl.drawing.image import Image
     
+def create_new_logbook(self, selected_mech):
     '''
-    read in from the copy of the logbook
+    reads the new logbook template to initiate changes  
+    '''
+
+    from openpyxl import load_workbook
+    from openpyxl.drawing.image import Image
+
+    '''
+    create a copy of the existing logbook 
     '''
     print("Preparing for edit of logbook entry file")
-    wb = openpyxl.load_workbook('C:\\Users\\courtney.fennell\\Documents\\GitHub\\LogBookEditor\\MASTER_TEMPLATE.xlsx')
+    wb = load_workbook('C:\\Users\\courtney.fennell\\Documents\\GitHub\\LogBookEditor\\MASTER_TEMPLATE.xlsx')
     sheet = wb.active
     
     
@@ -104,14 +104,22 @@ def read_logbook(self, selected_mech):
     
     
     "Certificate #A&P" + selected_mech
-    sheet['A10'] = "LOGBOOK ENTRY"
+    sheet['B10'] = "Airframe LOGBOOK ENTRY"
+    sheet['B32'] = "Engine LOGBOOK ENTRY"
+    sheet['B55'] = "Propeller LOGBOOK ENTRY"
     wb.save("newFILE_template.xlsx")
-
-#may be combined with read_logbook    
-def edit_logbook(self):
-    print("editing logbook")
     
-def submit(self, selected_mech): #executed when form is submitted.
-    read_logbook(self, selected_mech)
+    '''
+    Fix the formatting on the excel sheet so it matches the original file
+    '''
+    #currently in the plane's specific directory. need to backout and get the vb script 
+    #or specify a full path to the file
+    #os.system.subprocess.call(['cscript.exe', 'C:\\Users\\user\\FixFormatting.vbs', sheet])
+    
+def submit(self, selected_mech): 
+    '''
+    executed when form is submitted.
+    '''
+    create_new_logbook(self, selected_mech)
     return 0;
 

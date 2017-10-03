@@ -36,6 +36,11 @@ let the user update the warnings from the gui
 handle the exception that is thrown when the user tries to write a file that is already open in excel
     this will likely never happen except in testing but should be handled anyway
 
+let the user specify the path to the planes on start for the first time
+    need to have a user imput
+    need it saved into the shelve file 
+    need to read it everytime from the shelve file
+    
 update readme
 
 
