@@ -28,9 +28,9 @@ RESERACH TASK
 
 Set the dropdown default to the last used mechanic
 
-add biweekly functions
-    ''' DONE'''add a biweekly dropdown 
-    ''' DONE'''write the biweekly to the file (only needs to be done once, it should propagate by itself
+''' DONE'''add biweekly functions
+    add a biweekly dropdown 
+    write the biweekly to the file (only needs to be done once, it should propagate by itself
     save the biweekly in the shelf file to default on the most recently use biweekly 
     
 display all the warnings on the final page

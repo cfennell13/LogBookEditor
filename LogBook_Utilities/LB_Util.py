@@ -65,8 +65,23 @@ def get_aplist(self):
     AP_list = shelfFile['mechanics']
     shelfFile.close()
     return AP_list
-    
-def submit(self, selections): 
+
+def write_biweekly(biweekly):
+    shelfFile = shelve.open(os.path.join('C:\\Users\\courtney.fennell\\Documents\\planes' , 'LogBookEditor_data'))  
+    shelfFile['biweekly'] = biweekly
+    shelfFile.close()
+
+def get_biweekly(self):
+    shelfFile = shelve.open(os.path.join('C:\\Users\\courtney.fennell\\Documents\\planes' , 'LogBookEditor_data')) 
+    try: 
+        biweekly = shelfFile['biweekly']
+    except:
+        biweekly = 1
+        
+    shelfFile.close()
+    return biweekly
+
+def submit(self, selections):
     '''
     reads the new logbook template to initiate changes  
     '''
@@ -125,7 +140,6 @@ def submit(self, selections):
     engine_logo = os.path.join(logos_path, 'engine_logo.png')
     prop_logo = os.path.join(logos_path, 'propeller_logo.png')
     
-    
     x=70
     airframe_ = Image(airframe_logo, size=(2*x, x))
     sheet.add_image(airframe_, 'H17')  
@@ -135,12 +149,22 @@ def submit(self, selections):
     
     prop = Image(prop_logo, size=(2*x, x))
     sheet.add_image(prop, 'H58')
+    
+    
     '''
     Set the date on the excel doc
     '''
     #date is used for naming the file also
     date = str(datetime.datetime.today()).split(" ")[0]
-    sheet['G2'] = (date)
+    sheet['G2'] = date
+    
+    
+    '''
+    Set the biweekly on the excel doc
+    '''
+    sheet['G18'] = 'Biweekly ' + date.split('-')[0] + '-'+ biweekly
+    write_biweekly(biweekly)
+    
     '''
     Set the mechanic on the excel doc
     '''
@@ -157,6 +181,7 @@ def submit(self, selections):
     sheet['B32'] = "Engine LOGBOOK ENTRY"
     sheet['B55'] = "Propeller LOGBOOK ENTRY"
     wb.save(date + '_' + os.path.basename(os.path.abspath('.')) + '.xlsx')
+    
     
     '''
     Fix the formatting on the excel sheet so it matches the original file
