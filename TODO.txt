@@ -9,7 +9,7 @@ List of functionality in order of priority:
         5. well documented readme
 
 
-add pictures for the airplane, engine, and prop
+''' DONE''' add pictures for the airplane, engine, and prop
 
 RESERACH TASK
     formatting with openpyxl??
@@ -24,7 +24,7 @@ RESERACH TASK
 
 ''' DONE''' Add tach time label for inputting tach times
 
-insert today's date into the logfile
+''' DONE''' insert today's date into the logfile
 
 Set the dropdown default to the last used mechanic
 

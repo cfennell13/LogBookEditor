@@ -73,6 +73,8 @@ def submit(self, selected_mech, tach_time):
 
     from openpyxl import load_workbook
     from openpyxl.drawing.image import Image
+    import datetime
+    
 
     '''
     create a copy of the existing logbook 
@@ -106,8 +108,6 @@ def submit(self, selected_mech, tach_time):
     
     '''
     Add the planes logos to the excel doc
-    #after MUCH trial and error, I still have no idea how size works but
-    #this is what looks like a good size for the PEA logo
     '''
     #this directory is the parent directory of the whole plane directories
     #this directory SHOULD contain the logo of the maintenance company
@@ -128,6 +128,10 @@ def submit(self, selected_mech, tach_time):
     
     prop = Image(prop_logo, size=(2*x, x))
     sheet.add_image(prop, 'H58')
+    '''
+    Set the date on the excel doc
+    '''
+    sheet['G2'] = (str(datetime.datetime.today()).split(" ")[0])
     '''
     Set the mechanic on the excel doc
     '''
