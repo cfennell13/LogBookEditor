@@ -101,7 +101,7 @@ def submit(self, selections):
     from openpyxl.drawing.image import Image
     import datetime
     import subprocess as sp
-    
+    import os
     '''
     grab all the variables from the dictionary
     '''
@@ -114,7 +114,7 @@ def submit(self, selections):
     create a copy of the existing logbook 
     '''
     print("Preparing for edit of logbook entry file")
-    wb = load_workbook('C:\\Users\\courtney.fennell\\Documents\\GitHub\\LogBookEditor\\MASTER_TEMPLATE.xlsx')
+    wb = load_workbook('C:\\Users\\courtney.fennell\\Documents\\GitHub\\LogBookEditor\\MASTER_TEMPLATE.xlsx', keep_vba=True)
     sheet = wb.active
     
     
@@ -204,10 +204,7 @@ def submit(self, selections):
     '''
     Fix the formatting on the excel sheet so it matches the original file
     '''
-    #currently in the plane's specific directory. need to backout and get the vb script 
-    #or specify a full path to the file
-    #os.system.subprocess.call(['cscript.exe', 'C:\\Users\\user\\FixFormatting.vbs', sheet])
-
+    
     '''
     open the excel sheet for the user to view/edit
     '''
