@@ -100,6 +100,7 @@ def submit(self, selections):
     from openpyxl import load_workbook
     from openpyxl.drawing.image import Image
     import datetime
+    import subprocess as sp
     
     '''
     grab all the variables from the dictionary
@@ -190,7 +191,10 @@ def submit(self, selections):
     sheet['B10'] = "Airframe LOGBOOK ENTRY"
     sheet['B32'] = "Engine LOGBOOK ENTRY"
     sheet['B55'] = "Propeller LOGBOOK ENTRY"
-    wb.save(date + '_' + os.path.basename(os.path.abspath('.')) + '.xlsx')
+    
+    #used to open the excel file for the user 
+    file_name = date + '_' + os.path.basename(os.path.abspath('.')) + '.xlsx'
+    wb.save(file_name)
     
     #write the mechanic to the shelve file
     write_mechanic(selected_mech)
@@ -204,4 +208,8 @@ def submit(self, selections):
     #or specify a full path to the file
     #os.system.subprocess.call(['cscript.exe', 'C:\\Users\\user\\FixFormatting.vbs', sheet])
 
+    '''
+    open the excel sheet for the user to view/edit
+    '''
+    sp.Popen(os.path.join(os.getcwd(), file_name), shell=True)
 
