@@ -11,7 +11,7 @@ List of functionality in order of priority:
 
 ''' DONE''' add pictures for the airplane, engine, and prop
 
-RESERACH TASK
+''' DONE''' RESERACH TASK
     formatting with openpyxl??
     will probably need to do some VBA??
     Formatting required:
@@ -19,6 +19,8 @@ RESERACH TASK
             bold: 100 Hr, Airframe, Engine, Propeller,
             Bold and blue: prop #, engine #, airframe #
             bold and red: any serial numbers (start with S/N)
+    Formatting is completed through a macro that runs when the user opens the file
+    
 
 ''' DONE''' Change the mechanic to the proper name based on their selection in the drop down
 

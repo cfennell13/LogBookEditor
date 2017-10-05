@@ -114,7 +114,7 @@ def submit(self, selections):
     create a copy of the existing logbook 
     '''
     print("Preparing for edit of logbook entry file")
-    wb = load_workbook('C:\\Users\\courtney.fennell\\Documents\\GitHub\\LogBookEditor\\MASTER_TEMPLATE.xlsx', keep_vba=True)
+    wb = load_workbook('C:\\Users\\courtney.fennell\\Documents\\GitHub\\LogBookEditor\\MASTER_TEMPLATE.xlsm', keep_vba=True)
     sheet = wb.active
     
     
@@ -185,25 +185,25 @@ def submit(self, selections):
     sheet['B21'] = "Signature: " + selected_mech + '_________________________' 
     sheet['E21'] = "    Certificate #A&P" + AP_list[selected_mech] 
     #set the tach time on the logbook
-    sheet['I2'] = round(int(tach_time),1) # want 1 decimal point
+    sheet['I2'] = round(float(tach_time),1) # want 1 decimal point
     
     #create entries
     sheet['B10'] = "Airframe LOGBOOK ENTRY"
     sheet['B32'] = "Engine LOGBOOK ENTRY"
     sheet['B55'] = "Propeller LOGBOOK ENTRY"
     
+    #SET CELL K2 to 0 for the macro to run
+    sheet['K2'] = "0"
+    
+    
     #used to open the excel file for the user 
-    file_name = date + '_' + os.path.basename(os.path.abspath('.')) + '.xlsx'
+    file_name = date + '_' + os.path.basename(os.path.abspath('.')) + '.xlsm'
     wb.save(file_name)
     
     #write the mechanic to the shelve file
     write_mechanic(selected_mech)
     
     
-    
-    '''
-    Fix the formatting on the excel sheet so it matches the original file
-    '''
     
     '''
     open the excel sheet for the user to view/edit
